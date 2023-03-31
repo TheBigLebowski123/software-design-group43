@@ -5,9 +5,17 @@ import java.util.Scanner;
 
 
 public class Minigame {
-    int statChange = 0;
-    int level = 1;
-    String levelCode () {
+    private int happinessIncrease = 0;
+    private int healthIncrease = 0;
+    private int level = 1;
+
+
+
+    public int getHappinessIncrease() { return happinessIncrease; }
+    public int getHealthIncrease() { return healthIncrease; }
+
+
+    private String levelCode () {
         Random random = new Random();
         String code = "";
 
@@ -19,7 +27,7 @@ public class Minigame {
         return code;
     }
 
-    void countDown (int time) {
+    private void countDown (int time) {
         for (int i = time; i >= 0; i--) {
             wait (1000);
             System.out.print(i + " ");
@@ -27,9 +35,12 @@ public class Minigame {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     }
 
-    boolean playlevel() {
+    public boolean playLevel() {
         Scanner myObj = new Scanner(System.in);
         String secretCode = levelCode();
+
+        happinessIncrease += 2;
+        healthIncrease += 1;
 
         if (level == 1) { System.out.println("Your tamagotchi is playing secret code!"); }
         System.out.println("Level " + level + "!");
@@ -50,7 +61,7 @@ public class Minigame {
         }
     }
 
-    public static void wait(int ms) {
+    private static void wait(int ms) {
         try {
             Thread.sleep(ms);
         }
@@ -58,14 +69,9 @@ public class Minigame {
             Thread.currentThread().interrupt();
         }
     }
-    public static void main() {
-        Minigame myMinigame =  new Minigame();
-        boolean levelPassed = true;
-        while (levelPassed) {
-            levelPassed = myMinigame.playlevel();
-            myMinigame.level++;
+    public void playGame() {
+        while (playLevel()) {
+            level++;
         }
     }
 }
-
-

@@ -17,10 +17,8 @@ public class Tamagotchi {
     public Inventory inventory;
     java.util.Timer timer = new java.util.Timer();
 
-    /*public ArrayList<FoodItem> inventoryFood;
-    public ArrayList<ToyItem> inventoryToy;
-    public ArrayList<MedicineItem> inventoryMedicine;*/
-// we can add a case that when a tamagotchi gets to for example age 20 some more foods will be added to the foodinvent
+
+    // we can add a case that when a tamagotchi gets to for example age 20 some more foods will be added to the foodinvent
     public Tamagotchi(String name) {
         this.name = name;
         this.age = 0;
@@ -32,14 +30,13 @@ public class Tamagotchi {
         this.inventory = new Inventory();
 
         TimerTask task = new TimerTask() {
-            @Override
             public void run() {
                 stateHandler("");
             }
         };
-        timer.schedule(task, 0, 10000);
+        timer.schedule(task, 0, 60000);
     }
-//add a function to reduce some points from health and hunger.. points every something second
+
 
     public static Tamagotchi getInstance(String name){
         if(instance == null){
@@ -88,11 +85,11 @@ public class Tamagotchi {
 
     public void play(ToyItem toyItem) {
         if (isAlive()) {
-            Minigame.main();
-            happiness += toyItem.getHappinessPoints();
-            health += toyItem.getHealthPoints();
+            Minigame myMinigame =  new Minigame();
+            myMinigame.playGame();
+            happiness += myMinigame.getHappinessIncrease();
+            health += myMinigame.getHealthIncrease();
 
-//            Minigame.main();
             stateHandler("You played with " + getName() + ".");
         } else {
             stateHandler(getName() + " is no longer alive. You cannot play with it anymore.");
@@ -116,13 +113,26 @@ public class Tamagotchi {
         if (!isAlive){
             System.out.println("Game over. " + name + " is no longer alive.");
             timer.cancel();
+            System.exit(0);
         }
         else if (isAlive && message == "") {
             age += 1;
             hunger -= 2;
             weight += 1;
             happiness -= 1;
-            health -= 1;
+            if (hunger < 0) {
+                health += 2*hunger;
+            }
+            if (weight > 100) {
+                health -= weight-100;
+            }
+            if (happiness <= 0 || happiness >= 50) {
+                health += happiness;
+            }
+            if (age > 100) {
+                health -= age-100;
+            }
+
             System.out.println(message);
             System.out.println("Age: " + getAge() + " Weight: " + getWeight() + " Hunger: "
                     + getHunger() + " Happiness: " + getHappiness() + " Health: " + getHealth());

@@ -15,7 +15,8 @@ public class Main {
         // create a new tamagotchi
         System.out.print("Enter a name for your tamagotchi: ");
         String name = scanner.nextLine();
-        Tamagotchi tamagotchi = new Tamagotchi(name);
+//        Tamagotchi tamagotchi = new Tamagotchi(name);
+        Tamagotchi tamagotchi = Tamagotchi.getInstance(name);
         tamagotchi.inventory.addFoodItem();
         tamagotchi.inventory.addToyItem();
         tamagotchi.inventory.addMedicineItem();
