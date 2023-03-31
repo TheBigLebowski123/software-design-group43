@@ -17,6 +17,8 @@ public class Main {
         String name = scanner.nextLine();
         Tamagotchi tamagotchi = new Tamagotchi(name);
         tamagotchi.inventory.addFoodItem();
+        tamagotchi.inventory.addToyItem();
+        tamagotchi.inventory.addMedicineItem();
 
         // call every 10 seconds
         //Timer t = new Timer(true);
@@ -63,10 +65,17 @@ public class Main {
                     int medicineChoice = scanner.nextInt();
                     tamagotchi.heal(tamagotchi.inventory.getMedicineItems().get(medicineChoice - 1));
                     break;
+
                 case 4:
+                    System.out.println("These are the current statistics of your tamagotchi:");
+                    tamagotchi.stateHandler("");
+                    break;
+                case 5:
                     // quit game
                     System.out.println("Quitting game...");
-                    return;
+                    System.exit(0);
+                    break;
+
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }

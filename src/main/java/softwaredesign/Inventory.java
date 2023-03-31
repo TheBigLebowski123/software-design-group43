@@ -24,12 +24,21 @@ public class Inventory {
         foodItems.add(chickenSandwich);;
     }
 
-    public void addToyItem(ToyItem item) {
-        toyItems.add(item);
+    public void addToyItem() {
+        ToyItem minigame;
+        minigame = new ToyItem("Memory Game", 20, 10);
+        toyItems.add(minigame);
     }
 
-    public void addMedicineItem(MedicineItem item) {
-        medicineItems.add(item);
+    public void addMedicineItem() {
+        MedicineItem item1;
+        item1 = new MedicineItem("Aspirin", 15);
+        medicineItems.add(item1);
+
+        MedicineItem item2;
+        item2 = new MedicineItem("Ibuprofyn", 20);
+        medicineItems.add(item2);
+
     }
 
     public void removeFoodItem(FoodItem item) {
@@ -44,8 +53,7 @@ public class Inventory {
         medicineItems.remove(item);
     }
 
-    public List<FoodItem> getFoodItems() {return foodItems;
-    }
+    public List<FoodItem> getFoodItems() {return foodItems;}
 
     public List<ToyItem> getToyItems() {
         return toyItems;
