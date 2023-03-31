@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.TimerTask;
 
 public class Tamagotchi {
+
+    private static Tamagotchi instance = null;
     private String name;
     private int age;
     private int weight;
@@ -38,6 +40,13 @@ public class Tamagotchi {
         timer.schedule(task, 0, 10000);
     }
 //add a function to reduce some points from health and hunger.. points every something second
+
+    public static Tamagotchi getInstance(String name){
+        if(instance == null){
+            instance = new Tamagotchi(name);
+        }
+        return instance;
+    }
     public String getName() {
         return name;
     }
