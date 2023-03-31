@@ -21,8 +21,6 @@ public class FoodItem {
         return nutritionPoints;
     }
 
- 
-
    public int getHealthPoints() {
         return healthPoints;
     }
