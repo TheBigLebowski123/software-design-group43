@@ -1,8 +1,12 @@
+package softwaredesign;
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.TimerTask;
 
 public class Tamagotchi {
+
+    private static Tamagotchi instance = null;
     private String name;
     private int age;
     private int weight;
@@ -13,9 +17,7 @@ public class Tamagotchi {
     public Inventory inventory;
     java.util.Timer timer = new java.util.Timer();
 
-    /*public ArrayList<FoodItem> inventoryFood;
-    public ArrayList<ToyItem> inventoryToy;
-    public ArrayList<MedicineItem> inventoryMedicine;*/
+
 // we can add a case that when a tamagotchi gets to for example age 20 some more foods will be added to the foodinvent
     public Tamagotchi(String name) {
         this.name = name;
@@ -26,9 +28,7 @@ public class Tamagotchi {
         this.health = 5;
         this.isAlive = true;
         this.inventory = new Inventory();
-        /*this.inventoryFood = new ArrayList<>();
-        this.inventoryToy = new ArrayList<>();
-        this.inventoryMedicine = new ArrayList<>();*/
+
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
@@ -37,7 +37,14 @@ public class Tamagotchi {
         };
         timer.schedule(task, 0, 10000);
     }
-//add a function to reduce some points from health and hunger.. points every something second
+
+
+    public static Tamagotchi getInstance(String name){
+        if(instance == null){
+            instance = new Tamagotchi(name);
+        }
+        return instance;
+    }
     public String getName() {
         return name;
     }
@@ -66,32 +73,11 @@ public class Tamagotchi {
         return isAlive;
     }
 
-    /*public void addFoodToInventory(FoodItem foodItem) {
-        FoodItem Apple;
-        Apple = new FoodItem("Apple",30,30);
-        inventoryFood.add(Apple);
-
-        FoodItem chickenSandwich;
-        chickenSandwich = new FoodItem("ChickenSandwich",50,50);
-        inventoryFood.add(chickenSandwich);
-
-    }*/
-
-    /*public void addToyToInventory(ToyItem toyItem) {
-        inventoryToy.add(toyItem);
-    }
-
-    public void addMedicineToInventory(MedicineItem medicineItem) {
-        inventoryMedicine.add(medicineItem);
-    }*/
 
     public void feed(FoodItem foodItem) {
         if (isAlive()) {
             hunger += foodItem.getNutritionPoints();
-            //weight += foodItem.getWeightPoints();
-            //happiness += foodItem.getHappinessPoints();
-            //health += foodItem.getHealthPoints();
-            //inventoryFood.remove(foodItem); // we don't need to remove it can always be there and the player can feed it again and again
+
             stateHandler("You fed " + getName() + ".");
         } else {
             stateHandler(getName() + " is no longer alive. You cannot feed it anymore.");
@@ -100,9 +86,11 @@ public class Tamagotchi {
 
     public void play(ToyItem toyItem) {
         if (isAlive()) {
+            Minigame.main();
             happiness += toyItem.getHappinessPoints();
             health += toyItem.getHealthPoints();
-            //inventoryToy.remove(toyItem);
+
+//            Minigame.main();
             stateHandler("You played with " + getName() + ".");
         } else {
             stateHandler(getName() + " is no longer alive. You cannot play with it anymore.");
@@ -112,7 +100,6 @@ public class Tamagotchi {
     public void heal(MedicineItem medicineItem) {
         if (isAlive()) {
             health += medicineItem.getHealthPoints();
-            //inventoryMedicine.remove(medicineItem);
             stateHandler("You healed " + getName() + ".");
         } else {
             stateHandler(getName() + " is no longer alive. You cannot heal it anymore.");

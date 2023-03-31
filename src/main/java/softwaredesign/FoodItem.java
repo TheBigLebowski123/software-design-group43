@@ -1,3 +1,5 @@
+package softwaredesign;
+
 public class FoodItem {
     private String name;
     private int nutritionPoints;

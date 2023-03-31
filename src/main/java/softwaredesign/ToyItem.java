@@ -1,3 +1,5 @@
+package softwaredesign;
+
 public class ToyItem {
     private String name;
     private int happinessPoints;

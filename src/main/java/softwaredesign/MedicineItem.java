@@ -1,3 +1,5 @@
+package softwaredesign;
+
 public class MedicineItem {
     private String name;
     private int healthPoints;
