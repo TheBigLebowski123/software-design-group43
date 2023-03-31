@@ -35,7 +35,7 @@ public class Tamagotchi {
                 stateHandler("");
             }
         };
-        timer.schedule(task, 0, 10000);
+        timer.schedule(task, 0, 60000);
     }
 
 
@@ -86,12 +86,21 @@ public class Tamagotchi {
 
     public void play(ToyItem toyItem) {
         if (isAlive()) {
-            Minigame.main();
-            happiness += toyItem.getHappinessPoints();
-            health += toyItem.getHealthPoints();
+            Minigame myMinigame =  new Minigame();
+            myMinigame.playGame();
+            happiness += myMinigame.getHappinessIncrease();
+            health += myMinigame.getHealthIncrease();
 
-//            Minigame.main();
             stateHandler("You played with " + getName() + ".");
+
+            java.util.Timer timer = new java.util.Timer();
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    stateHandler("");
+                }
+            };
+            timer.schedule(task, 0, 60000);
         } else {
             stateHandler(getName() + " is no longer alive. You cannot play with it anymore.");
         }
@@ -114,13 +123,26 @@ public class Tamagotchi {
         if (!isAlive){
             System.out.println("Game over. " + name + " is no longer alive.");
             timer.cancel();
+            System.exit(0);
         }
         else if (isAlive && message == "") {
             age += 1;
             hunger -= 2;
             weight += 1;
             happiness -= 1;
-            health -= 1;
+            if (hunger < 0) {
+                health += 2*hunger;
+            }
+            if (weight > 100) {
+                health -= weight-100;
+            }
+            if (happiness <= 0 || happiness >= 50) {
+                health += happiness;
+            }
+            if (age > 100) {
+                health -= age-100;
+            }
+
             System.out.println(message);
             System.out.println("Age: " + getAge() + " Weight: " + getWeight() + " Hunger: "
                     + getHunger() + " Happiness: " + getHappiness() + " Health: " + getHealth());
